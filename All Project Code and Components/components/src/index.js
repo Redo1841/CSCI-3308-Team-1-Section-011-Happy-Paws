@@ -62,7 +62,6 @@ app.use(
 // *****************************************************
 
 // TODO - Include your API routes here
-/*
 // Authentication Middleware.
 const auth = (req, res, next) => {
   if (req.session.user || req.path === '/login' || req.path === '/register') {
@@ -117,7 +116,7 @@ app.post('/login', async (req, res) => {
     return res.redirect('/login');
   }
 });
-*/
+
 app.get('/welcome', (req, res) => {
   res.json({status: 'success', message: 'Welcome!'});
 });
