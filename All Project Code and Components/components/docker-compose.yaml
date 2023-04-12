@@ -21,6 +21,7 @@ services:
       - '3000:3000'
     volumes:
       - ./src:/home/node/app
-    command: 'npm run inanddev'
+    command: 'npm run inanddev' 
+    #change to npm run testandrun for lab 11 test
 volumes:
   group-project:
