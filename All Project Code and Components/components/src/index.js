@@ -76,7 +76,12 @@ const auth = (req, res, next) => {
 app.use(auth);
 
 app.get('/', (req, res) => {
+  // TODO: Add search functionality
   res.redirect('/home');
+});
+
+app.get('/welcome', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome!' });
 });
 
 app.get('/register', (req, res) => {
@@ -87,6 +92,25 @@ app.get('/login', (req, res) => {
   res.render('pages/login', {});
 });
 
+app.get('/favorite', (req, res) => {
+  //TODO: Add favorites
+  res.render('pages/login', {});
+});
+
+app.post('/favorite', async (req, res) => {
+  try {
+    const query = 'INSERT INTO favorites(user_id, animal_id) VALUES ($1, $2);';
+
+    await db.none(query, [req.session.user.user_id, req.body.animal_id]);
+
+    //return res.redirect('/')
+    return res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 app.post('/register', async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -94,7 +118,7 @@ app.post('/register', async (req, res) => {
     const query = 'INSERT INTO users(username, password) VALUES ($1, $2);'
 
     await db.none(query, [req.body.username, hash]);
-    
+
     return res.redirect('/login');
   } catch (err) {
     return res.redirect('/register');
@@ -117,9 +141,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/welcome', (req, res) => {
-  res.json({status: 'success', message: 'Welcome!'});
-});
 // starting the server and keeping the connection open to listen for more requests
 module.exports = app.listen(3000);
 console.log('Server is listening on port 3000');
