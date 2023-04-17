@@ -1,34 +1,75 @@
-<header>
-    <nav class="navbar navbar-expand-sm border-bottom">
-      <div class="container">
-        <button
-          class="navbar-toggler ms-auto"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbar-collapse"
-          aria-controls="navbar"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <!-- TO-DO: For Discover, add a <a> tag with an attribute href to call the '/discover' API -->
-                  <a href = '/discover'>Discover</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <!-- TO-DO: For Discover, add a <a> tag with an attribute href to call the '/discover' API -->
-                  <a href = '/favorite'>Favorite</a>
-            </li>
-          </ul>
-          <div class="nav-item me-1">
-            <!-- TO-DO: For Logout, add a <a> tag with an attribute href to call the '/logout API -->
-                <a href = '/logout'>Logout</a>
-          </div>
+
+
+<header class="mb-4 fixed-top" >
+  <!-- Jumbotron -->
+  <div class="p-3 text-center border-bottom" style="background-color: #3400ee;">
+    <div class="container-fluid" >
+      <div class="row">
+        <!-- Center elements -->
+        <div class="center">
+          <a href="#!" class="ms-md-2">
+            <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="35" />
+          </a>
         </div>
+        <!-- Center elements -->
+
+    
       </div>
-    </nav>
-   </header>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+
+
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#006958;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+    
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/Discover">Discover</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Favorites">Favorites</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Profile">Profile</a>
+          </li>
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+  
+      <!-- Right elements -->
+      <div class="d-flex align-items-center">
+        <!-- Icon -->
+    
+        <button type="button" class="btn btn-primary me-3" href="/logout" style="background-color: black;">
+          Logout
+        </button>
+       
+  
+      </div>
+      <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+  
+  
+
+</header>
