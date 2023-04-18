@@ -115,9 +115,10 @@ app.post('/register', async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
 
-    const query = 'INSERT INTO users(username, password, first_name, last_name) VALUES ($1, $2, $3, $4);'
+    const query = `INSERT INTO users(email, password, first_name, last_name, location) VALUES ($1, $2, $3, $4, $5);`
 
-    await db.none(query, [req.body.username, hash, req.body.first_name, req.body.last_name]);
+    await db.none(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+
 
     return res.redirect('/login');
   } catch (err) {
@@ -129,7 +130,7 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const query = 'SELECT * FROM users WHERE username = $1';
-    const user = await db.one(query, [req.body.username]);
+    const user = await db.one(query, [req.body.email]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
       req.session.user = user;

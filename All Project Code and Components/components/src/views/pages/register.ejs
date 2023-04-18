@@ -26,19 +26,19 @@
         <div class="card border-0 shadow">
           <div class="card-body">
             <h2 class="text-center my-4">Happy Paws Register</h2>
-            <form action="">
+            <form action="/register" method="POST">
               <label>Email</label>  
-              <input type="text" name="" id="" class="form-control mt-2 mb-4 py-2" placeholder="Email" required/>
+              <input type="email" name='email' id='email' class="form-control mt-2 mb-4 py-2" placeholder="Email" required/>
               <label>Password</label>  
-              <input type="text" name="" id="" class="form-control mt-2 mb-4 py-2" placeholder="Password" required/>
+              <input type="text" name='password' id='password' class="form-control mt-2 mb-4 py-2" placeholder="Password" required/>
               <label>First Name - Optional</label>  
-              <input type="text" name="" id="" class="form-control mt-2 mb-4 py-2" placeholder="First Name" />
+              <input type="text" name='first_name' id='first_name' class="form-control mt-2 mb-4 py-2" placeholder="First Name" />
               <label>Last Name - Optional</label>  
-              <input type="text" name="" id="" class="form-control mt-2 mb-4 py-2" placeholder="Last Name" />
+              <input type="text" name='last_name' id='last_name' class="form-control mt-2 mb-4 py-2" placeholder="Last Name" />
               <label>State - Optional</label>  
-              <input type="text" name="" id="" class="form-control mt-2 mb-2 py-2" placeholder="Location" />
+              <input type="text" name='location' id='location' class="form-control mt-2 mb-2 py-2" placeholder="Location" />
               <div class="text-center mt-4">
-                <button class="btn btn-primary px-4">Register</button>
+                <button class="btn btn-primary px-4" type="submit" value="Submit">Register</button>
                 <p class="py-3">Already Have an Account? <a href="#">Login here</a></p>
               </div>
             </form>
