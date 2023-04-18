@@ -51,5 +51,16 @@ it('Negative : /add_user. Checking invalid name', done => {
       done();
     });
 });
-
+//part b
+it('positive : /login', done => {
+  chai
+    .request(server)
+    .post('/login')
+    .send({username: 'test', password: '123'})
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.equals('Success');
+      done();
+    });
+});
 });
