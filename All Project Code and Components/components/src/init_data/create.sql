@@ -14,3 +14,6 @@ CREATE TABLE favorites(
     animal_id int,
     foreign key (user_id) references users(user_id)
 );
+
+
+

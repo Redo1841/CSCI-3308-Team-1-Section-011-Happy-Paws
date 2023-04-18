@@ -76,7 +76,12 @@ const auth = (req, res, next) => {
 app.use(auth);
 
 app.get('/', (req, res) => {
+  // TODO: Add search functionality
   res.redirect('/home');
+});
+
+app.get('/welcome', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome!' });
 });
 
 app.get('/register', (req, res) => {
@@ -87,16 +92,37 @@ app.get('/login', (req, res) => {
   res.render('pages/login', {});
 });
 
+app.get('/favorite', (req, res) => {
+  //TODO: Add favorites
+  res.render('pages/login', {});
+});
+
+app.post('/favorite', async (req, res) => {
+  try {
+    const query = 'INSERT INTO favorites(user_id, animal_id) VALUES ($1, $2);';
+
+    await db.none(query, [req.session.user.user_id, req.body.animal_id]);
+
+    //return res.redirect('/')
+    return res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 app.post('/register', async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
 
-    const query = 'INSERT INTO users(username, password) VALUES ($1, $2);'
+    const query = `INSERT INTO users(email, password, first_name, last_name, location) VALUES ($1, $2, $3, $4, $5);`
 
-    await db.none(query, [req.body.username, hash]);
-    
+    await db.none(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+
+
     return res.redirect('/login');
   } catch (err) {
+    console.error(err);
     return res.redirect('/register');
   }
 });
@@ -104,7 +130,7 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const query = 'SELECT * FROM users WHERE username = $1';
-    const user = await db.one(query, [req.body.username]);
+    const user = await db.one(query, [req.body.email]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
       req.session.user = user;
@@ -117,9 +143,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/welcome', (req, res) => {
-  res.json({status: 'success', message: 'Welcome!'});
-});
 // starting the server and keeping the connection open to listen for more requests
 module.exports = app.listen(3000);
 console.log('Server is listening on port 3000');
