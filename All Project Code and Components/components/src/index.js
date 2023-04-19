@@ -75,7 +75,7 @@ const auth = (req, res, next) => {
 };
 
 // Authentication Required
-//app.use(auth);
+app.use(auth);
 
 app.get('/', (req, res) => {
   // TODO: Add search functionality
