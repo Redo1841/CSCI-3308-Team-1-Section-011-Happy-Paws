@@ -94,7 +94,12 @@ app.get('/login', (req, res) => {
 
 app.get('/favorite', (req, res) => {
   //TODO: Add favorites
-  res.render('pages/login', {});
+  res.render('pages/favorite', {});
+});
+
+app.get('/discover', (req, res) => {
+  //TODO: Add favorites
+  res.render('pages/home', {});
 });
 
 app.post('/favorite', async (req, res) => {
