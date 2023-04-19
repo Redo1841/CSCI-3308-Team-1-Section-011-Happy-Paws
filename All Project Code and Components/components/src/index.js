@@ -2,6 +2,7 @@
 // <!-- Section 1 : Import Dependencies -->
 // *****************************************************
 
+const process = require('process');
 const express = require('express'); // To build an application server or API
 const app = express();
 const pgp = require('pg-promise')(); // To connect to the Postgres DB from the node server
@@ -9,6 +10,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcrypt'); //  To hash passwords
 const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
+require('dotenv').config()
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -73,11 +75,31 @@ const auth = (req, res, next) => {
 };
 
 // Authentication Required
-app.use(auth);
+//app.use(auth);
 
 app.get('/', (req, res) => {
   // TODO: Add search functionality
-  res.redirect('/home');
+  res.redirect('/discover');
+});
+
+app.get('/discover', async (req, res) => {
+
+  const axiosConfig = {
+    baseURL: 'https://api.petfinder.com/v2/',
+    headers: {
+      Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
+    },
+    params: {
+      limit:10
+    }
+  };
+
+  const finderRes = await axios.get('/animals', axiosConfig);
+
+  console.log(finderRes.data);
+
+  return res.sendStatus(200);
+
 });
 
 app.get('/welcome', (req, res) => {
@@ -151,6 +173,18 @@ app.post('/login', async (req, res) => {
     return res.redirect('/login');
   }
 });
+
+(async () => {
+  const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
+    {
+      grant_type: 'client_credentials',
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET
+    }
+  );
+  process.env.PETFINDER_API_KEY = res.data.access_token;
+})();
+
 
 // starting the server and keeping the connection open to listen for more requests
 module.exports = app.listen(3000);
