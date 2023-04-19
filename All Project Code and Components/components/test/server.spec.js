@@ -26,13 +26,35 @@ describe('Server!', () => {
 
   // ===========================================================================
   // TO-DO: Part A Login unit test case
-  //We are checking POST /add_user API by passing the user info in the correct order. This test case should pass and return a status 200 along with a "Success" message.
-//Positive cases
-it('positive : /add_user', done => {
+  it('positive : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({email: 'test', password: '123'})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equals('Success');
+        done();
+      });
+  });
+  it('Negative : /login. Email does not match with Password', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({email: 'incorrect', password: '123'})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equals('Password and Email do not Match');
+        done();
+      });
+  });
+//part b
+
+it('positive : /register', done => {
   chai
     .request(server)
-    .post('/add_user')
-    .send({id: 5, name: 'John Doe'})
+    .post('/register')
+    .send({email: 'redo1841@colorado.edu', password: '123'})
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res.body.message).to.equals('Success');
@@ -40,38 +62,14 @@ it('positive : /add_user', done => {
     });
 });
 
-//We are checking POST /add_user API by passing the user info in in incorrect manner (name cannot be an integer). This test case should pass and return a status 200 along with a "Invalid input" message.
-it('Negative : /add_user. Checking invalid name', done => {
-  chai
-    .request(server)
-    .post('/add_user')
-    .send({id: '5', name: 10})
-    .end((err, res) => {
-      expect(res).to.have.status(200);
-      expect(res.body.message).to.equals('Invalid input');
-      done();
-    });
-});
-//part b
-it('positive : /login', done => {
-  chai
-    .request(server)
-    .post('/login')
-    .send({email: 'test', password: '123'})
-    .end((err, res) => {
-      expect(res).to.have.status(200);
-      expect(res.body.message).to.equals('Success');
-      done();
-    });
-});
-it('Negative : /login. Email does not match with Password', done => {
+it('Negative : /register. Checking invalid email', done => {
   chai
     .request(server)
     .post('/register')
-    .send({email: 'incorrect', password: '123'})
+    .send({email: 'redo1841colorado.edu', password: '123'})
     .end((err, res) => {
       expect(res).to.have.status(200);
-      expect(res.body.message).to.equals('Password and Username do not Match');
+      expect(res.body.message).to.equals('Invalid input');
       done();
     });
 });
