@@ -56,11 +56,24 @@ it('positive : /login', done => {
   chai
     .request(server)
     .post('/login')
-    .send({username: 'test', password: '123'})
+    .send({email: 'test', password: '123'})
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res.body.message).to.equals('Success');
       done();
     });
 });
+it('Negative : /login. Email does not match with Password', done => {
+  chai
+    .request(server)
+    .post('/register')
+    .send({email: 'incorrect', password: '123'})
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.equals('Password and Username do not Match');
+      done();
+    });
 });
+});
+
+

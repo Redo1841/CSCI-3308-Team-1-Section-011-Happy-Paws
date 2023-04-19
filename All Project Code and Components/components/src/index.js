@@ -137,6 +137,7 @@ app.post('/login', async (req, res) => {
       req.session.save();
       return res.redirect('/discover');
     }
+    res.json({ status: 'success', message: 'Password and Username do not Match'});
     return res.redirect('/login');
   } catch (err) {
     return res.redirect('/login');
