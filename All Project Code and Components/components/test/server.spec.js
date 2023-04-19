@@ -5,6 +5,7 @@ const server = require('../src/index'); //TO-DO Make sure the path to your index
 // Chai HTTP provides an interface for live integration testing of the API's.
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const { it } = require('node:test');
 chai.should();
 chai.use(chaiHttp);
 const {assert, expect} = chai;

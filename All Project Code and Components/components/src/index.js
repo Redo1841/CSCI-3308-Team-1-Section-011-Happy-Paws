@@ -128,8 +128,9 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+  console.log("login")
   try {
-    const query = 'SELECT * FROM users WHERE username = $1';
+    const query = 'SELECT * FROM users WHERE email = $1';
     const user = await db.one(query, [req.body.email]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
@@ -137,9 +138,11 @@ app.post('/login', async (req, res) => {
       req.session.save();
       return res.redirect('/discover');
     }
+    console.log("username and password do not match");
     res.json({ status: 'success', message: 'Password and Username do not Match'});
     return res.redirect('/login');
   } catch (err) {
+    console.log("error with database");
     return res.redirect('/login');
   }
 });

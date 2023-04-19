@@ -26,13 +26,13 @@
         <div class="card border-0 shadow">
           <div class="card-body">
             <h2 class="text-center my-4">Happy Paws Login</h2>
-            <form action="">
+            <form action="/login" method="POST">
               <label>Email</label>  
-              <input type="text" name="email" id="email" class="form-control mt-2 mb-4 py-2" placeholder="Email" />
+              <input type="text" name='email' id='email' class="form-control mt-2 mb-4 py-2" placeholder="Email" />
               <label>Password</label>  
-              <input type="text" name="password" id="password" class="form-control mt-2 mb-2 py-2" placeholder="Password" />
+              <input type="text" name='password' id='password' class="form-control mt-2 mb-2 py-2" placeholder="Password" />
               <div class="text-center mt-4">
-                <button style="background-color:rgb(0, 162, 255);color:white" class="btn btn-primary px-4">Login</button>
+                <button style="background-color:rgb(0, 162, 255);color:white" class="btn btn-primary px-4" type="submit" value="Submit">Login</button>
                 <p class="py-3">New to Happy Paws? <a href="/register">Register here</a></p>
               </div>
             </form>
