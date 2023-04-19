@@ -166,7 +166,6 @@ app.post('/login', async (req, res) => {
       return res.redirect('/discover');
     }
     console.log("username and password do not match");
-    res.json({ status: 'success', message: 'Password and Username do not Match'});
     return res.redirect('/login');
   } catch (err) {
     console.log("error with database");

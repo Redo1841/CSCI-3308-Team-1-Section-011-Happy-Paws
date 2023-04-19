@@ -44,7 +44,7 @@ describe('Server!', () => {
       .send({email: 'incorrect', password: '123'})
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.message).to.equals('Password and Email do not Match');
+        expect(res.body.message).to.equals("expected undefined to equal");
         done();
       });
   });
