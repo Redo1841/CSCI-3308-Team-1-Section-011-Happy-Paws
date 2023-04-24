@@ -173,6 +173,14 @@ app.post('/favorite', async (req, res) => {
   }
 });
 
+
+// PROFILE PAGE API 
+
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
+});
+
+
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
     {
