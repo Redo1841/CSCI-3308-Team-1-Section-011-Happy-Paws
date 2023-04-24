@@ -100,8 +100,6 @@ app.get('/discover', async (req, res) => {
 
   const finderRes = await axios.get('/animals', axiosConfig);
 
-  console.log(finderRes.data);
-
   return res.render('pages/discover', { petfinder: finderRes.data });
 
 });
