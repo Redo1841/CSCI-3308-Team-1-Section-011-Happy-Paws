@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcrypt'); //  To hash passwords
 const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
-require('dotenv').config()
+require('dotenv').config(); //include .env
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -82,6 +82,10 @@ app.get('/', (req, res) => {
   res.redirect('/discover');
 });
 
+app.get('/welcome', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome!' });
+});
+
 app.get('/discover', async (req, res) => {
 
   const axiosConfig = {
@@ -90,7 +94,7 @@ app.get('/discover', async (req, res) => {
       Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
     },
     params: {
-      limit:10
+      limit: 10
     }
   };
 
@@ -98,12 +102,8 @@ app.get('/discover', async (req, res) => {
 
   console.log(finderRes.data);
 
-  return res.sendStatus(200);
+  return res.render('pages/discover', { petfinder: finderRes.data });
 
-});
-
-app.get('/welcome', (req, res) => {
-  res.json({ status: 'success', message: 'Welcome!' });
 });
 
 app.get('/register', (req, res) => {
@@ -114,14 +114,51 @@ app.get('/login', (req, res) => {
   res.render('pages/login', {});
 });
 
-app.get('/favorite', (req, res) => {
+app.get('/favorite', async (req, res) => {
   //TODO: Add favorites
-  res.render('pages/favorite', {});
+  try {
+    const query = `SELECT * FROM favorites where user_id = $1`;
+
+    const favs = await db.any(query, [req.session.user.user_id]);
+    res.render('pages/favorite', { favorites: favs });
+  }
+  catch (err) {
+    console.error(err);
+    return res.redirect('/discover');
+  }
 });
 
-app.get('/discover', (req, res) => {
-  //TODO: Add favorites
-  res.render('pages/home', {});
+app.post('/register', async (req, res) => {
+  try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    const query = `INSERT INTO users(email, password, first_name, last_name, location) VALUES ($1, $2, $3, $4, $5);`;
+
+    await db.none(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+
+
+    return res.redirect('/login');
+  } catch (err) {
+    console.error(err);
+    return res.redirect('/register');
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const user = await db.one(query, [req.body.email]);
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (match) {
+      req.session.user = user;
+      req.session.save();
+      return res.redirect('/discover');
+    }
+    return res.redirect('/login');
+  } catch (err) {
+    console.error(err);
+    return res.redirect('/login');
+  }
 });
 
 app.post('/favorite', async (req, res) => {
@@ -138,42 +175,7 @@ app.post('/favorite', async (req, res) => {
   }
 });
 
-app.post('/register', async (req, res) => {
-  try {
-    const hash = await bcrypt.hash(req.body.password, 10);
-
-    const query = `INSERT INTO users(email, password, first_name, last_name, location) VALUES ($1, $2, $3, $4, $5);`
-
-    await db.none(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
-
-
-    return res.redirect('/login');
-  } catch (err) {
-    console.error(err);
-    return res.redirect('/register');
-  }
-});
-
-app.post('/login', async (req, res) => {
-  console.log("login")
-  try {
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const user = await db.one(query, [req.body.email]);
-    const match = await bcrypt.compare(req.body.password, user.password);
-    if (match) {
-      req.session.user = user;
-      req.session.save();
-      return res.redirect('/discover');
-    }
-    console.log("username and password do not match");
-    return (res.redirect('/login'));
-  } catch (err) {
-    console.log(err);
-    return res.redirect('/login');
-  }
-});
-
-(async () => {
+const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
     {
       grant_type: 'client_credentials',
@@ -182,7 +184,9 @@ app.post('/login', async (req, res) => {
     }
   );
   process.env.PETFINDER_API_KEY = res.data.access_token;
-})();
+  setTimeout(tokenRefresh, 3580 * 1000); // Almost an hour
+};
+tokenRefresh();
 
 
 // starting the server and keeping the connection open to listen for more requests
