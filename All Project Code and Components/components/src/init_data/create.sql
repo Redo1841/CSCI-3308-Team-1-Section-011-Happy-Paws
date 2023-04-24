@@ -17,5 +17,19 @@ CREATE TABLE favorites(
     foreign key (user_id) references users(user_id)
 );
 
+insert into users(
+    email,
+    password,
+    first_name,
+    last_name,
+    location)
+    values
+    (
+        'test@gmail.com',
+        'test',
+        'John',
+        'Doe',
+        'Colorado'
+    );
 
 
