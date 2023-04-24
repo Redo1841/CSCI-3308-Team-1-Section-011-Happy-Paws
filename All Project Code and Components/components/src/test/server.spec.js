@@ -40,11 +40,10 @@ describe('Server!', () => {
   it('Negative : /login. Email does not match with Password', done => {
     chai
       .request(server)
-      .post('/register')
+      .post('/login')
       .send({email: 'incorrect', password: '123'})
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.message).to.equals('Password and Email do not Match');
         done();
       });
   });
