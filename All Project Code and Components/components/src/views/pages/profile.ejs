@@ -14,9 +14,6 @@
                         <label>Email: <%= users.email %></label>
                     </div>
                     <div class = "container">
-                        <label>Password: <%= users.password %></label>
-                    </div>
-                    <div class = "container">
                         <label>First Name: <%= users.first_name %></label>
                     </div>
                     <div class = "container">
@@ -36,39 +33,19 @@
     <div class="row">
       <div class="col-12 col-sm-7 col-md-6 m-auto">
         <div class="card border-0 shadow">
-          <div class="card-body">
-            <h2 class="text-center my-4">Happy Paws Edit Profile</h2>
-            <form action="/profile" method="PUT">
-              <label>Email</label>  
-              <input type="email" name='email' id='email' class="form-control mt-2 mb-4 py-2" placeholder="Email" required/>
-              <div class="text-center mt-4">
-                <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Email</button>
-              </div>
-            </form>
-            <form action="/profilePassword" method="PUT">
+            <div class="card-body">
+                <h2 class="text-center my-4">Happy Paws Edit Profile</h2>
+                <form action="/profile" method="PUT">
+                <label>Email</label>  
+                <input type="email" name='email' id='email' class="form-control mt-2 mb-4 py-2" placeholder="Email"/>
                 <label>Password</label>  
-                <input type="password" name='password' id='password' class="form-control mt-2 mb-4 py-2" placeholder="Password" required/>
-                <div class="text-center mt-4">
-                  <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Password</button>
-                </div>
-            </form>
-              <form action="/profileFirstName" method="PUT">
+                <input type="password" name='password' id='password' class="form-control mt-2 mb-4 py-2" placeholder="Password"/>
                 <label>First Name</label>  
-                <input type="text" name='first_name' id='first_name' class="form-control mt-2 mb-4 py-2" placeholder="First Name" required/>
-                <div class="text-center mt-4">
-                  <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit First Name</button>
-                </div>
-            </form>
-            <form action="/profileLastName" method="PUT">
+                <input type="text" name='first_name' id='first_name' class="form-control mt-2 mb-4 py-2" placeholder="First Name"/>
                 <label>Last Name</label>  
-                <input type="text" name='last_name' id='last_name' class="form-control mt-2 mb-4 py-2" placeholder="Last Name" required/>
-                <div class="text-center mt-4">
-                  <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Last Name</button>
-                </div>
-            </form>
-            <form action="/profileState" method="PUT">
+                <input type="text" name='last_name' id='last_name' class="form-control mt-2 mb-4 py-2" placeholder="Last Name"/>
                 <div class="form-control mt-2 mb-4 py-2">
-                    <label for="state" class="col-sm-2 control-label">Edit State</label>
+                    <label for="state" class="col-sm-2 control-label">Change State</label>
                     <div class="col-sm-10" >
                     <select class="form-control" id="state" name="state" >
                         <option hidden>Choose your State:</option>
@@ -126,10 +103,9 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Location</button>
+                    <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Profile</button>
                 </div>
             </form>
-          </div>
         </div>
       </div>
     </div>

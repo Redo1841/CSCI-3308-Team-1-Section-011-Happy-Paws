@@ -191,27 +191,24 @@ app.get('/profile', async (req, res) => {
 });
 
 
-app.put('/profile', function (req, res) {
+app.put('/profile', async (req, res) => {
   console.log("change email");
-  const query =
-    `update users set email = $1 where user.email = ${req.session.user.email};`;
-  db.any(query, req.body.email)
-    // if query execution succeeds
-    // send success message
-    .then(function (data) {
-      res.status(201).json({
-        status: 'success',
-        data: data,
-        message: 'data updated successfully',
-      });
-      console.log(data);
-      res.redirect('/profile');
-    })
-    // if query execution fails
-    // send error message
-    .catch(function (err) {
-      return console.log(err);
-    });
+  
+  try{
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+    
+    const query =
+      `update users set email = $1, password = $2, first_name = $3, last_name = 4$, location = 5$ where user_id = ${req.session.user.user_id};`;
+    
+    await db.any(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+    return res.redirect('/profile');
+  }
+  catch (err) {
+    console.error(err);
+    return res.redirect('/discover');
+  }
+    
 });
 
 const tokenRefresh = async () => {
