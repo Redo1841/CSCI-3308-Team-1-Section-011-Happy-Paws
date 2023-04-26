@@ -191,17 +191,46 @@ app.get('/profile', async (req, res) => {
 });
 
 
-app.put('/profile', async (req, res) => {
-  console.log("change email");
+app.post('/profile', async (req, res) => {
   
   try{
 
-    const hash = await bcrypt.hash(req.body.password, 10);
+    let email = req.session.user.email;
+    let hash = req.session.user.password;
+    let first_name = req.session.user.first_name;
+    let last_name = req.session.user.last_name;
+    let location = req.session.user.location;
     
+    console.log(email);
+    console.log(hash);
+    console.log(first_name);
+    console.log(last_name);
+    console.log(location);
+    if(req.body.email)
+    {
+      email = req.body.email;
+    }
+    if(req.body.password)
+    {
+      hash = await bcrypt.hash(req.body.password, 10);
+    }
+    if(req.body.first_name)
+    {
+      first_name = req.body.first_name;
+    }
+    if(req.body.last_name)
+    {
+      last_name = req.body.last_name;
+    }
+    if(req.body.location == "Choose Your State:")
+    {
+      location = req.body.location;
+    }
+
     const query =
-      `update users set email = $1, password = $2, first_name = $3, last_name = 4$, location = 5$ where user_id = ${req.session.user.user_id};`;
-    
-    await db.any(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+      `update users set email = $1, password = $2, first_name = $3, last_name = $4, location = $5 where user_id = ${req.session.user.user_id} returning *;`;
+    //last_name = 4$, location = 5 , last_name, location$
+    await db.one(query, [email, hash, first_name, last_name, req.body.location]);
     return res.redirect('/profile');
   }
   catch (err) {

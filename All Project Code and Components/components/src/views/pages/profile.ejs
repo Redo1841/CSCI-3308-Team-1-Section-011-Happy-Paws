@@ -35,7 +35,7 @@
         <div class="card border-0 shadow">
             <div class="card-body">
                 <h2 class="text-center my-4">Happy Paws Edit Profile</h2>
-                <form action="/profile" method="PUT">
+                <form action="/profile" method="POST">
                 <label>Email</label>  
                 <input type="email" name='email' id='email' class="form-control mt-2 mb-4 py-2" placeholder="Email"/>
                 <label>Password</label>  
@@ -45,9 +45,9 @@
                 <label>Last Name</label>  
                 <input type="text" name='last_name' id='last_name' class="form-control mt-2 mb-4 py-2" placeholder="Last Name"/>
                 <div class="form-control mt-2 mb-4 py-2">
-                    <label for="state" class="col-sm-2 control-label">Change State</label>
+                    <label for="location" class="col-sm-2 control-label">Change State</label>
                     <div class="col-sm-10" >
-                    <select class="form-control" id="state" name="state" >
+                    <select class="form-control" id="location" name="location" >
                         <option hidden>Choose your State:</option>
                         <option value="AK">Alaska</option>
                         <option value="AL">Alabama</option>
