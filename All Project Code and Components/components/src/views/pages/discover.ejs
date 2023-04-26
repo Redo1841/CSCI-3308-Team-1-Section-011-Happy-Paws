@@ -89,7 +89,11 @@ function favoriteFunction4(){
               <p class="card-text"><%= petfinder.animals[0].breeds.primary%> - <%= petfinder.animals[0].gender%>
 
                 <div id="favoriteDiv">
-                  <i onclick="favoriteFunction1()" id= "favoriteHeart1" class="fa-regular fa-heart"></i>
+                  <form action = "/favorite" method = "post">
+                    <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[0].id%>">
+                    <!-- <button onclick="favoriteFunction1()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                    <button id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button>
+                  </form>
               </div>
 
               </p>
@@ -111,7 +115,11 @@ function favoriteFunction4(){
                   <p class="card-text"><%= petfinder.animals[1].breeds.primary%> - <%= petfinder.animals[1].gender%>
     
                     <div id="favoriteDiv">
-                      <i onclick="favoriteFunction2()" id= "favoriteHeart2" class="fa-regular fa-heart"></i>
+                      <form action = "/favorite" method = "post">
+                        <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[1].id%>">
+                        <!-- <button onclick="favoriteFunction2()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                        <button id= "favoriteHeart2" type="submit"><i class="fa-regular fa-heart"></i></button>
+                      </form>
                   </div>
                   </p>
                   
@@ -129,7 +137,11 @@ function favoriteFunction4(){
                   <p class="card-text"><%= petfinder.animals[2].breeds.primary%> - <%= petfinder.animals[2].gender%>
     
                     <div id="favoriteDiv">
-                      <i onclick="favoriteFunction3()" id= "favoriteHeart3" class="fa-regular fa-heart"></i>
+                      <form action = "/favorite" method = "post">
+                        <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[2].id%>">
+                        <!-- <button onclick="favoriteFunction3()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                        <button id= "favoriteHeart3" type="submit"><i class="fa-regular fa-heart"></i></button>
+                      </form>
                   </div>
                   </p>
                   
@@ -147,7 +159,11 @@ function favoriteFunction4(){
                   <p class="card-text"><%= petfinder.animals[3].breeds.primary%> - <%= petfinder.animals[3].gender%>
     
                     <div id="favoriteDiv">
-                      <i onclick="favoriteFunction4()" id= "favoriteHeart4" class="fa-regular fa-heart"></i>
+                      <form action = "/favorite" method = "post">
+                        <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[3].id%>">
+                        <!-- <button onclick="favoriteFunction4()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                        <button id= "favoriteHeart4" type="submit"><i class="fa-regular fa-heart"></i></button>
+                      </form>
                   </div>
                   </p>
                   

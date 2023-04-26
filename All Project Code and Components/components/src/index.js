@@ -165,8 +165,8 @@ app.post('/favorite', async (req, res) => {
     const query = 'INSERT INTO favorites(user_id, animal_id) VALUES ($1, $2);';
 
     await db.none(query, [req.session.user.user_id, req.body.animal_id]);
-
-    //return res.redirect('/')
+    console.log(req.body.animal_id);
+    return res.redirect('/discover');
     return res.sendStatus(200);
   } catch (err) {
     console.error(err);
