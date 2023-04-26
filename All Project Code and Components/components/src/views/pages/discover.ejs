@@ -8,7 +8,7 @@
   <style type="text/css">
 
 .fa-heart{
-    color: red;
+    color: rgb(0, 179, 255);;
     font-size: 12vh;
     
     cursor: pointer;
@@ -26,7 +26,7 @@
     }
     50%{
         scale: 1.1;
-        color: rgb(253, 87, 87);
+        color: rgb(0, 179, 255);;
     }
     100%{
         scale: 1;
@@ -82,15 +82,16 @@ function favoriteFunction4(){
     <div class="row">
         <div class="col-3">
           <div class="card" style="border-color: rgb(0, 179, 255);">
-            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <img class="card-img-top" src= "<% petfinder.animals[0].photos.full %>" alt="Card image cap" width="200" height ="300">
             <div class="card text-center">
             <div class="card-body">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Age - Breed - Gender
+              <h5 class="card-title"><%= petfinder.animals[0].name %></h5>
+              <p class="card-text"><%= petfinder.animals[0].breeds.primary%> - <%= petfinder.animals[0].gender%>
 
                 <div id="favoriteDiv">
                   <i onclick="favoriteFunction1()" id= "favoriteHeart1" class="fa-regular fa-heart"></i>
               </div>
+
               </p>
               
             </div>
@@ -99,13 +100,15 @@ function favoriteFunction4(){
           </div>
         </div>
 
+
+
         <div class="col-3">
-            <div class="card" style="border-color: pink;">
+            <div class="card" style="border-color: rgb(0, 179, 255);">
               <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
               <div class="card text-center">
                 <div class="card-body">
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Age - Breed - Gender
+                  <h5 class="card-title"><%= petfinder.animals[1].name %></h5>
+                  <p class="card-text"><%= petfinder.animals[1].breeds.primary%> - <%= petfinder.animals[1].gender%>
     
                     <div id="favoriteDiv">
                       <i onclick="favoriteFunction2()" id= "favoriteHeart2" class="fa-regular fa-heart"></i>
@@ -118,12 +121,12 @@ function favoriteFunction4(){
           </div>
 
           <div class="col-3">
-            <div class="card" style="border-color: pink;">
+            <div class="card" style="border-color: rgb(0, 179, 255);">
               <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
               <div class="card text-center">
                 <div class="card-body">
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Age - Breed - Gender
+                  <h5 class="card-title"><%= petfinder.animals[2].name %></h5>
+                  <p class="card-text"><%= petfinder.animals[2].breeds.primary%> - <%= petfinder.animals[2].gender%>
     
                     <div id="favoriteDiv">
                       <i onclick="favoriteFunction3()" id= "favoriteHeart3" class="fa-regular fa-heart"></i>
@@ -140,8 +143,8 @@ function favoriteFunction4(){
               <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
               <div class="card text-center">
                 <div class="card-body">
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Age - Breed - Gender
+                  <h5 class="card-title"><%= petfinder.animals[3].name %></h5>
+                  <p class="card-text"><%= petfinder.animals[3].breeds.primary%> - <%= petfinder.animals[3].gender%>
     
                     <div id="favoriteDiv">
                       <i onclick="favoriteFunction4()" id= "favoriteHeart4" class="fa-regular fa-heart"></i>

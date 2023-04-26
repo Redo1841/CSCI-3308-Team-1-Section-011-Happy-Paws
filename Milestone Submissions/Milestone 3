@@ -4,10 +4,15 @@ Finished login & registration
 Discover basic layout
 Integrated API with petfinder
 Added favorites endpoint
+Created dog profile with pulling info from API
 
 For Next Week:
 Integrate front end to API for profile and discover
-Add profile page
+work on integration of profile page
+Add more detailed dog profile 
+
+
 
 EPIC To be Completed:
 Profile
+Favorites 
