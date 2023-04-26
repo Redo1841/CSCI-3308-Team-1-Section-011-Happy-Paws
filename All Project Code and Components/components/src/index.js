@@ -176,10 +176,40 @@ app.post('/favorite', async (req, res) => {
 
 // PROFILE PAGE API 
 
-app.get('/profile', (req, res) => {
-  res.render('pages/profile');
+app.get('/profile', async (req, res) => {
+  
+  try {
+    const query = `SELECT * FROM users where user_id = $1`;
+  
+    const user = await db.one(query, [req.session.user.user_id]);
+    res.render('pages/profile', { users: user });
+  }
+  catch (err) {
+    console.error(err);
+    return res.redirect('/discover');
+  }
 });
 
+
+app.put('/profile', async (req, res) => {
+  console.log("change email");
+  
+  try{
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+    
+    const query =
+      `update users set email = $1, password = $2, first_name = $3, last_name = 4$, location = 5$ where user_id = ${req.session.user.user_id};`;
+    
+    await db.any(query, [req.body.email, hash, req.body.first_name, req.body.last_name, req.body.location]);
+    return res.redirect('/profile');
+  }
+  catch (err) {
+    console.error(err);
+    return res.redirect('/discover');
+  }
+    
+});
 
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
