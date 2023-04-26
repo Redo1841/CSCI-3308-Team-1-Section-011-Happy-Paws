@@ -96,6 +96,7 @@ app.get('/discover', async (req, res) => {
     params: {
       limit: 10
     }
+
   };
 
   const finderRes = await axios.get('/animals', axiosConfig);
