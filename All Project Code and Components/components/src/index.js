@@ -94,14 +94,18 @@ app.get('/discover', async (req, res) => {
       Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
     },
     params: {
-      limit: 10
+      limit: 100,
+      type: "Dog",
+
     }
 
   };
 
   const finderRes = await axios.get('/animals', axiosConfig);
 
-  return res.render('pages/discover', { petfinder: finderRes.data });
+  let petfinder = {};
+  petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
+  return res.render('pages/discover', { petfinder });
 
 });
 
