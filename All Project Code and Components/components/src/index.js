@@ -105,6 +105,8 @@ app.get('/discover', async (req, res) => {
 
   let petfinder = {};
   petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
+  console.log(petfinder.animals)
+  console.log(petfinder.animals[0].photos)
   return res.render('pages/discover', { petfinder });
 
 });
