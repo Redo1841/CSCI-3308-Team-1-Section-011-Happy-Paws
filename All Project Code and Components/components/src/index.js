@@ -247,6 +247,19 @@ app.post('/profile', async (req, res) => {
     
 });
 
+app.delete('/favorite', async (req, res) => {
+  try {
+    const query = 'DELETE FROM favorites WHERE user_id = $1, animal_id = $2;';
+
+    await db.none(query, [req.session.user.user_id, req.body.animal_id]);
+    return res.redirect('/favorites');
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
+
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
     {
