@@ -94,13 +94,20 @@ app.get('/discover', async (req, res) => {
       Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
     },
     params: {
-      limit: 10
+      limit: 100,
+      type: "Dog",
+
     }
+
   };
 
   const finderRes = await axios.get('/animals', axiosConfig);
 
-  return res.render('pages/discover', { petfinder: finderRes.data });
+  let petfinder = {};
+  petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
+  console.log(petfinder.animals)
+  console.log(petfinder.animals[0].photos)
+  return res.render('pages/discover', { petfinder });
 
 });
 
@@ -252,6 +259,19 @@ app.post('/profile', async (req, res) => {
   }
     
 });
+
+app.delete('/favorite', async (req, res) => {
+  try {
+    const query = 'DELETE FROM favorites WHERE user_id = $1, animal_id = $2;';
+
+    await db.none(query, [req.session.user.user_id, req.body.animal_id]);
+    return res.redirect('/favorites');
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
