@@ -122,10 +122,23 @@ app.get('/login', (req, res) => {
 app.get('/favorite', async (req, res) => {
   //TODO: Add favorites
   try {
-    const query = `SELECT * FROM favorites where user_id = $1`;
+    const query = `SELECT animal_id FROM favorites where user_id = $1`;
 
     const favs = await db.any(query, [req.session.user.user_id]);
-    res.render('pages/favorite', { favorites: favs });
+
+    let info = favs.map(async (fave)=>{
+      const axiosConfig = {
+        baseURL: 'https://api.petfinder.com/v2/',
+        headers: {
+          Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
+        },
+        params: {
+          limit: 1
+        }
+      };
+      return await axios.get('/animals'+favs, axiosConfig);
+    });
+    res.render('pages/favorite', { favorites: info });
   }
   catch (err) {
     console.error(err);
