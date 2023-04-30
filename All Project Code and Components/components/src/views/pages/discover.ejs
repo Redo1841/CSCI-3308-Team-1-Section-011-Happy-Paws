@@ -85,9 +85,9 @@ function favoriteFunction4(){
       <div class="row mt-5">
     <% } %> 
     <div class="col-3">
-      <div class="card d-flex flex-column" style="border-color: rgb(0, 179, 255);">
+      <div class="card d-flex flex-column h-100" style="border-color: rgb(0, 179, 255);">
         <img class="card-img-top" src= "<%= petfinder.animals[i].photos[0].full %>" alt="Card image cap" width="200" height ="300">
-        <div class="card text-center">
+        <div class="card text-center border-0">
         <div class="card-body flex-fill">
           <h5 class="card-title"><%= petfinder.animals[i].name %></h5>
           <p class="card-text"><%= petfinder.animals[i].breeds.primary%> - <%= petfinder.animals[i].gender%>
