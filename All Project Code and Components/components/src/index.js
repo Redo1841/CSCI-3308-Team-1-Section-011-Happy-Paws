@@ -291,7 +291,10 @@ const tokenRefresh = async () => {
 };
 tokenRefresh();
 
-
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.render('pages/logout');
+});
 
 
 // starting the server and keeping the connection open to listen for more requests
