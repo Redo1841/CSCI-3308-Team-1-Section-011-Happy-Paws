@@ -45,9 +45,9 @@
                 <label>Last Name</label>  
                 <input type="text" name='last_name' id='last_name' class="form-control mt-2 mb-4 py-2" placeholder="Last Name"/>
                 <div class="form-control mt-2 mb-4 py-2">
-                    <label for="location" class="col-sm-2 control-label">Change State</label>
-                    <div class="col-sm-10" >
-                    <select class="form-control" id="location" name="location" >
+                    <label for="state" class="form-label control-label">State - Optional</label>
+                    <div class="mb-2">
+                      <select class="form-control" id="state" name="state" >
                         <option hidden>Choose your State:</option>
                         <option value="AK">Alaska</option>
                         <option value="AL">Alabama</option>
@@ -103,11 +103,12 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4" type="submit" value="Submit">Edit Profile</button>
+                    <button style="background-color:rgb(0, 162, 255);color:white" class="btn px-4 border-0" type="submit" value="Submit">Edit Profile</button>
                 </div>
             </form>
         </div>
       </div>
     </div>
-  </div class="mb-5">
+  </div>
+</div>
 <%- include ('../partials/footer') %>
