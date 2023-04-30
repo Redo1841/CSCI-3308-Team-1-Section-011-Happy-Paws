@@ -4,66 +4,186 @@
 
 <div class="container mt-4">
     <h1 class="mb-4">Favorited Dogs</h1>
-    <div class="row">
-        <div class="col-3">
-          <div class="card" style="border-color: rgb(0, 179, 255);">
-            <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-            <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-            <div class="card-body" style="border-color: rgb(0, 179, 255);">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Age - Breed - Gender
-              </p>
-              
-            </div>
-          </div>
 
+    
+    <div class="row">
+      <div class="col-3">
+        <div class="card" style="border-color: rgb(0, 179, 255);">
+          <img class="card-img-top" src= "<%= petfinder.animals[0].photos[0].full %>" alt="Card image cap" width="200" height ="300">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title"><%= petfinder.animals[0].name %></h5>
+            <p class="card-text"><%= petfinder.animals[0].breeds.primary%> - <%= petfinder.animals[0].gender%>
+
+              <div id="favoriteDiv">
+                <form action = "/favorite" method = "post">
+                  <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[0].id%>">
+                  <!-- <button onclick="favoriteFunction1()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                  <button id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button>
+                </form>
+            </div>
+
+            </p>
+            
+          </div>
+        </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="col-3">
+          <div class="card" style="border-color: rgb(0, 179, 255);">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title"><%= petfinder.animals[1].name %></h5>
+                <p class="card-text"><%= petfinder.animals[1].breeds.primary%> - <%= petfinder.animals[1].gender%>
+  
+                  <div id="favoriteDiv">
+                    <form action = "/favorite" method = "post">
+                      <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[1].id%>">
+                      <!-- <button onclick="favoriteFunction2()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                      <button id= "favoriteHeart2" type="submit"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                </div>
+                </p>
+                
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
+          <div class="card" style="border-color: rgb(0, 179, 255);">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title"><%= petfinder.animals[2].name %></h5>
+                <p class="card-text"><%= petfinder.animals[2].breeds.primary%> - <%= petfinder.animals[2].gender%>
+  
+                  <div id="favoriteDiv">
+                    <form action = "/favorite" method = "post">
+                      <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[2].id%>">
+                      <!-- <button onclick="favoriteFunction3()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                      <button id= "favoriteHeart3" type="submit"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                </div>
                 </p>
                 
               </div>
             </div>
-  
-            </div>
           </div>
+        </div>
 
-          <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
+        <div class="col-3">
+          <div class="card" style="border-color: rgb(0, 179, 255);">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title"><%= petfinder.animals[3].name %></h5>
+                <p class="card-text"><%= petfinder.animals[3].breeds.primary%> - <%= petfinder.animals[3].gender%>
+  
+                  <div id="favoriteDiv">
+                    <form action = "/favorite" method = "post">
+                      <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[3].id%>">
+                      <!-- <button onclick="favoriteFunction4()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                      <button id= "favoriteHeart4" type="submit"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                </div>
                 </p>
                 
               </div>
             </div>
-  
-            </div>
           </div>
+        </div>
+  </div>
 
-          <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
-                </p>
-                
-              </div>
-            </div>
-  
+  <div class="row mt-5">
+      <div class="col-3">
+        <div class="card">
+          <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+          <div class="card-body">
+            <h5 class="card-title">Name</h5>
+            <p class="card-text">Age - Breed - Gender</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
             </div>
           </div>
-    </div>
+        </div>
+
+        <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
+            </div>
+          </div>
+        </div>
+
+  </div>
+
+  <div class="row mt-5">
+      <div class="col-3">
+        <div class="card">
+          <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+          <div class="card-body">
+            <h5 class="card-title">Name</h5>
+            <p class="card-text">Age - Breed - Gender</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" src="#" alt="Card image cap" width="200" height ="300">
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Age - Breed - Gender</p>
+            </div>
+          </div>
+        </div>
+
+  </div>
 </div>
 <%- include ('../partials/footer') %>
