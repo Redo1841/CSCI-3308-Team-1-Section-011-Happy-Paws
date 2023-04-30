@@ -105,8 +105,8 @@ app.get('/discover', async (req, res) => {
 
   let petfinder = {};
   petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
-  console.log(petfinder.animals)
-  console.log(petfinder.animals[0].photos)
+  // console.log(petfinder.animals)
+  // console.log(petfinder.animals[0].photos)
   return res.render('pages/discover', { petfinder });
 
 });
@@ -120,31 +120,36 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/favorite', async (req, res) => {
-  //TODO: Add favorites
   try {
     const query = `SELECT animal_id FROM favorites where user_id = $1`;
-
     const favs = await db.any(query, [req.session.user.user_id]);
+    let ids = favs.map(obj => obj.animal_id);
+    const axiosConfig = {
+      baseURL: 'https://api.petfinder.com/v2/',
+      headers: {
+        Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
+      },
+      params: {
+        limit: 1
+      }
+    };
+    let petfinder = {};
+    petfinder.animals = await Promise.all(ids.map(async (fave, i) => {
+      const response = await axios.get(`/animals/${fave}`, axiosConfig);
+      const animal = response.data.animal;
+      if (animal && animal.photos.length > 0) {
+        return animal;
+      }
+    }));
+    petfinder.animals = petfinder.animals.filter((animal) => animal).slice(0, 20);
 
-    let info = favs.map(async (fave)=>{
-      const axiosConfig = {
-        baseURL: 'https://api.petfinder.com/v2/',
-        headers: {
-          Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
-        },
-        params: {
-          limit: 1
-        }
-      };
-      return await axios.get('/animals'+favs, axiosConfig);
-    });
-    res.render('pages/favorite', { favorites: info });
-  }
-  catch (err) {
+    res.render('pages/favorite', { petfinder});
+  } catch (err) {
     console.error(err);
     return res.redirect('/discover');
   }
 });
+
 
 app.post('/register', async (req, res) => {
   try {
