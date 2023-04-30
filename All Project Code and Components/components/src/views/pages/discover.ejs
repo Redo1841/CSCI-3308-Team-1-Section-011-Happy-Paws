@@ -99,6 +99,20 @@ function favoriteFunction4(){
               </form>
           </div>
           </p>
+          <button class="view-animal-btn" data-petfinder-url="<%= petfinder.animals[i].url %>">View Animal</button>
+
+                <!-- JavaScript code to handle the button click -->
+                <script>
+                  const viewAnimalBtns = document.querySelectorAll('.view-animal-btn');
+                  
+                  viewAnimalBtns.forEach(btn => {
+                    btn.addEventListener('click', (event) => {
+                      event.preventDefault();
+                      const petfinderUrl = event.target.getAttribute('data-petfinder-url');
+                      window.open(petfinderUrl, '_blank');
+                    });
+                  });
+                </script>
         </div>
       </div>
       </div>
