@@ -105,8 +105,6 @@ app.get('/discover', async (req, res) => {
 
   let petfinder = {};
   petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
-  // console.log(petfinder.animals)
-  // console.log(petfinder.animals[0].photos)
   return res.render('pages/discover', { petfinder });
 
 });
@@ -189,9 +187,7 @@ app.post('/favorite', async (req, res) => {
     const query = 'INSERT INTO favorites(user_id, animal_id) VALUES ($1, $2);';
 
     await db.none(query, [req.session.user.user_id, req.body.animal_id]);
-    console.log(req.body.animal_id);
     return res.redirect('/discover');
-    return res.sendStatus(200);
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);
@@ -215,17 +211,6 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-
-
-  //need separate queries for each
-  //const query =
-  //  `update users set email = $1, password = $2, first_name = $3, last_name = $4, location = $5 where user_id = ${req.session.user.user_id} returning *;`;
-  //last_name = 4$, location = 5 , last_name, location$
-  //await db.one(query, [email, hash, first_name, last_name, req.body.location]);
-  //return res.redirect('/profile');
-  //}
-//});
-
 app.post('/profile/email', async (req,res) => {
   if(req.body.email)
   {
@@ -233,20 +218,19 @@ app.post('/profile/email', async (req,res) => {
       const query = `update users set email = $1 where user_id = ${req.session.user.user_id} returning *;`;
       
       await db.one(query, [req.body.email]); //need await to update the query before trying to rerender the profile page
-      console.log("success");
       return res.redirect('/profile');
       
     }
     catch(err)
     {
-      console.log(err);
+      console.error(err);
       return res.redirect('/discover');
     }
     
   }
   else
   {
-    console.log("No Email provided")
+    console.error("No Email provided")
   }
   res.redirect('/profile');
 });
@@ -259,20 +243,19 @@ app.post('/profile/password', async(req,res) => {
       const query = `update users set password = $1 where user_id = ${req.session.user.user_id} returning *;`;
 
       await db.one(query, [hash]);
-      console.log("success");
       return res.redirect('/profile');
       
     }
     catch(err)
     {
-      console.log(err);
+      console.error(err);
       return res.redirect('/discover');
     }
     
   }
   else
   {
-    console.log("No password provided")
+    console.error("No password provided")
   }
   res.redirect('/profile');
 });
@@ -284,20 +267,19 @@ app.post('/profile/first_name', async (req,res) => {
       const query = `update users set first_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
       
       await db.one(query, [req.body.first_name]); //need await to update the query before trying to rerender the profile page
-      console.log("success");
       return res.redirect('/profile');
       
     }
     catch(err)
     {
-      console.log(err);
+      console.error(err);
       return res.redirect('/discover');
     }
     
   }
   else
   {
-    console.log("No First Name provided")
+    console.error("No First Name provided")
   }
   res.redirect('/profile');
 });
@@ -308,20 +290,19 @@ app.post('/profile/last_name', async (req,res) => {
       const query = `update users set last_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
       
       await db.one(query, [req.body.last_name]); //need await to update the query before trying to rerender the profile page
-      console.log("success");
       return res.redirect('/profile');
       
     }
     catch(err)
     {
-      console.log(err);
+      console.error(err);
       return res.redirect('/discover');
     }
     
   }
   else
   {
-    console.log("No Last Name provided")
+    console.error("No Last Name provided")
   }
   res.redirect('/profile');
 });
@@ -333,20 +314,19 @@ app.post('/profile/location', async (req,res) => {
       const query = `update users set location = $1 where user_id = ${req.session.user.user_id} returning *;`;
       
       await db.one(query, [req.body.location]); //need await to update the query before trying to rerender the profile page
-      console.log("success");
       return res.redirect('/profile');
       
     }
     catch(err)
     {
-      console.log(err);
+      console.error(err);
       return res.redirect('/discover');
     }
     
   }
   else
   {
-    console.log("No Location provided")
+    console.error("No Location provided")
   }
   res.redirect('/profile');
 });
