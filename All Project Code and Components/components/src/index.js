@@ -191,16 +191,34 @@ app.get('/profile', async (req, res) => {
 });
 
 
-app.post('/profile', async (req, res) => {
-  
-  try{
 
-    let email = req.session.user.email;
-    let hash = req.session.user.password;
-    let first_name = req.session.user.first_name;
-    let last_name = req.session.user.last_name;
-    let location = req.session.user.location;
+  //need separate queries for each
+  //const query =
+  //  `update users set email = $1, password = $2, first_name = $3, last_name = $4, location = $5 where user_id = ${req.session.user.user_id} returning *;`;
+  //last_name = 4$, location = 5 , last_name, location$
+  //await db.one(query, [email, hash, first_name, last_name, req.body.location]);
+  //return res.redirect('/profile');
+  //}
+//});
+
+app.post('/profile/email', async (req,res) => {
+  if(req.body.email)
+  {
+    try{
+      const query = `update users set email = $1 where user_id = ${req.session.user.user_id} returning *;`;
+      
+      await db.one(query, [req.body.email]); //need await to update the query before trying to rerender the profile page
+      console.log("success");
+      return res.redirect('/profile');
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+      return res.redirect('/discover');
+    }
     
+<<<<<<< Updated upstream
     console.log(email);
     console.log(hash);
     console.log(first_name);
@@ -232,13 +250,116 @@ app.post('/profile', async (req, res) => {
     //last_name = 4$, location = 5 , last_name, location$
     await db.one(query, [email, hash, first_name, last_name, req.body.location]);
     return res.redirect('/profile');
+=======
+>>>>>>> Stashed changes
   }
-  catch (err) {
-    console.error(err);
-    return res.redirect('/discover');
+  else
+  {
+    console.log("No Email provided")
   }
-    
+  res.redirect('/profile');
 });
+
+app.post('/profile/password', async(req,res) => {
+  if(req.body.password)
+  {
+    try{
+      const hash = await bcrypt.hash(req.body.password, 10);
+      const query = `update users set password = $1 where user_id = ${req.session.user.user_id} returning *;`;
+
+      await db.one(query, [hash]);
+      console.log("success");
+      return res.redirect('/profile');
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+      return res.redirect('/discover');
+    }
+    
+  }
+  else
+  {
+    console.log("No password provided")
+  }
+  res.redirect('/profile');
+});
+
+app.post('/profile/first_name', async (req,res) => {
+  if(req.body.first_name)
+  {
+    try{
+      const query = `update users set first_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
+      
+      await db.one(query, [req.body.first_name]); //need await to update the query before trying to rerender the profile page
+      console.log("success");
+      return res.redirect('/profile');
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+      return res.redirect('/discover');
+    }
+    
+  }
+  else
+  {
+    console.log("No First Name provided")
+  }
+  res.redirect('/profile');
+});
+app.post('/profile/last_name', async (req,res) => {
+  if(req.body.last_name)
+  {
+    try{
+      const query = `update users set last_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
+      
+      await db.one(query, [req.body.last_name]); //need await to update the query before trying to rerender the profile page
+      console.log("success");
+      return res.redirect('/profile');
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+      return res.redirect('/discover');
+    }
+    
+  }
+  else
+  {
+    console.log("No Last Name provided")
+  }
+  res.redirect('/profile');
+});
+
+app.post('/profile/location', async (req,res) => {
+  if(req.body.location)
+  {
+    try{
+      const query = `update users set location = $1 where user_id = ${req.session.user.user_id} returning *;`;
+      
+      await db.one(query, [req.body.location]); //need await to update the query before trying to rerender the profile page
+      console.log("success");
+      return res.redirect('/profile');
+      
+    }
+    catch(err)
+    {
+      console.log(err);
+      return res.redirect('/discover');
+    }
+    
+  }
+  else
+  {
+    console.log("No Location provided")
+  }
+  res.redirect('/profile');
+});
+
 
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
