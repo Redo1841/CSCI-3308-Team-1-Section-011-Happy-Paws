@@ -94,13 +94,20 @@ app.get('/discover', async (req, res) => {
       Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
     },
     params: {
-      limit: 10
+      limit: 100,
+      type: "Dog",
+
     }
+
   };
 
   const finderRes = await axios.get('/animals', axiosConfig);
 
-  return res.render('pages/discover', { petfinder: finderRes.data });
+  let petfinder = {};
+  petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
+  // console.log(petfinder.animals)
+  // console.log(petfinder.animals[0].photos)
+  return res.render('pages/discover', { petfinder });
 
 });
 
@@ -113,18 +120,36 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/favorite', async (req, res) => {
-  //TODO: Add favorites
   try {
-    const query = `SELECT * FROM favorites where user_id = $1`;
-
+    const query = `SELECT animal_id FROM favorites where user_id = $1`;
     const favs = await db.any(query, [req.session.user.user_id]);
-    res.render('pages/favorite', { favorites: favs });
-  }
-  catch (err) {
+    let ids = favs.map(obj => obj.animal_id);
+    const axiosConfig = {
+      baseURL: 'https://api.petfinder.com/v2/',
+      headers: {
+        Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
+      },
+      params: {
+        limit: 1
+      }
+    };
+    let petfinder = {};
+    petfinder.animals = await Promise.all(ids.map(async (fave, i) => {
+      const response = await axios.get(`/animals/${fave}`, axiosConfig);
+      const animal = response.data.animal;
+      if (animal && animal.photos.length > 0) {
+        return animal;
+      }
+    }));
+    petfinder.animals = petfinder.animals.filter((animal) => animal).slice(0, 20);
+
+    res.render('pages/favorite', { petfinder});
+  } catch (err) {
     console.error(err);
     return res.redirect('/discover');
   }
 });
+
 
 app.post('/register', async (req, res) => {
   try {
@@ -164,8 +189,8 @@ app.post('/favorite', async (req, res) => {
     const query = 'INSERT INTO favorites(user_id, animal_id) VALUES ($1, $2);';
 
     await db.none(query, [req.session.user.user_id, req.body.animal_id]);
-
-    //return res.redirect('/')
+    console.log(req.body.animal_id);
+    return res.redirect('/discover');
     return res.sendStatus(200);
   } catch (err) {
     console.error(err);
@@ -218,40 +243,6 @@ app.post('/profile/email', async (req,res) => {
       return res.redirect('/discover');
     }
     
-<<<<<<< Updated upstream
-    console.log(email);
-    console.log(hash);
-    console.log(first_name);
-    console.log(last_name);
-    console.log(location);
-    if(req.body.email)
-    {
-      email = req.body.email;
-    }
-    if(req.body.password)
-    {
-      hash = await bcrypt.hash(req.body.password, 10);
-    }
-    if(req.body.first_name)
-    {
-      first_name = req.body.first_name;
-    }
-    if(req.body.last_name)
-    {
-      last_name = req.body.last_name;
-    }
-    if(req.body.location == "Choose Your State:")
-    {
-      location = req.body.location;
-    }
-
-    const query =
-      `update users set email = $1, password = $2, first_name = $3, last_name = $4, location = $5 where user_id = ${req.session.user.user_id} returning *;`;
-    //last_name = 4$, location = 5 , last_name, location$
-    await db.one(query, [email, hash, first_name, last_name, req.body.location]);
-    return res.redirect('/profile');
-=======
->>>>>>> Stashed changes
   }
   else
   {
@@ -360,6 +351,18 @@ app.post('/profile/location', async (req,res) => {
   res.redirect('/profile');
 });
 
+app.delete('/favorite', async (req, res) => {
+  try {
+    const query = 'DELETE FROM favorites WHERE user_id = $1, animal_id = $2;';
+
+    await db.none(query, [req.session.user.user_id, req.body.animal_id]);
+    return res.redirect('/favorites');
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
+});
+
 
 const tokenRefresh = async () => {
   const res = await axios.post('https://api.petfinder.com/v2/oauth2/token',
@@ -374,7 +377,10 @@ const tokenRefresh = async () => {
 };
 tokenRefresh();
 
-
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.render('pages/logout');
+});
 
 
 // starting the server and keeping the connection open to listen for more requests

@@ -4,66 +4,37 @@
 
 <div class="container mt-4">
     <h1 class="mb-4">Favorited Dogs</h1>
+
     <div class="row">
+      <% for (let i = 0; i < petfinder.animals.length && i < 100; i++) { %>
         <div class="col-3">
           <div class="card" style="border-color: rgb(0, 179, 255);">
-            <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-            <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-            <div class="card-body" style="border-color: rgb(0, 179, 255);">
-              <h5 class="card-title">Name</h5>
-              <p class="card-text">Age - Breed - Gender
-              </p>
-              
-            </div>
-          </div>
+            <% if (petfinder.animals[i].photos.length > 0) { %>
+              <img class="card-img-top" src="<%= petfinder.animals[i].photos[0].full %>" alt="Card image cap" width="200" height="300">
+            <% } %>
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title"><%= petfinder.animals[i].name %></h5>
+                <p class="card-text"><%= petfinder.animals[i].breeds.primary%> - <%= petfinder.animals[i].gender%> </p>
+                <button class="view-animal-btn" data-petfinder-url="<%= petfinder.animals[i].url %>">View Animal</button>
 
+                <!-- JavaScript code to handle the button click -->
+                <script>
+                  const viewAnimalBtns = document.querySelectorAll('.view-animal-btn');
+                  
+                  viewAnimalBtns.forEach(btn => {
+                    btn.addEventListener('click', (event) => {
+                      event.preventDefault();
+                      const petfinderUrl = event.target.getAttribute('data-petfinder-url');
+                      window.open(petfinderUrl, '_blank');
+                    });
+                  });
+                </script>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
-                </p>
-                
-              </div>
-            </div>
-  
-            </div>
-          </div>
-
-          <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
-                </p>
-                
-              </div>
-            </div>
-  
-            </div>
-          </div>
-
-          <div class="col-3">
-            <div class="card" style="border-color: rgb(0, 179, 255);">
-              <img class="card-img-top border-0" style="border-color: rgb(0, 179, 255);" src="#" alt="Card image cap" width="200" height ="300">
-              <div class="card text-center" style="border-color: rgb(0, 179, 255);">
-              <div class="card-body" style="border-color: rgb(0, 179, 255);">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text">Age - Breed - Gender
-                </p>
-                
-              </div>
-            </div>
-  
-            </div>
-          </div>
+      <% } %>
     </div>
 </div>
 <%- include ('../partials/footer') %>
