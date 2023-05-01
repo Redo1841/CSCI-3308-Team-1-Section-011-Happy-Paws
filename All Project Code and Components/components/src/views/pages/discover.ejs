@@ -51,7 +51,16 @@ function changeColor() {
               </form>
           </div>
           </p>
-          <button class="view-animal-btn" data-petfinder-url="<%= petfinder.animals[i].url %>">View Animal</button>
+
+          <form action="/dog/<%= petfinder.animals[i].id %>" method="GET">
+            <input type="submit" value="dog">
+          </form>
+
+          <button class="view-animal-btn" data-petfinder-url="<%= petfinder.animals[i].url %>">
+            
+            <a class="nav-link" href="/dog/<%= petfinder.animals[i].id %>">View Animal</a>
+
+          </button>
 
                 <!-- JavaScript code to handle the button click -->
                 <script>

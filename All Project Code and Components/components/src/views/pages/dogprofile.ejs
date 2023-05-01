@@ -6,13 +6,13 @@
             <div class="d-flex justify-content-center">
                 <div class="d-flex flex-row align-items-center p-4 shadow">
                     <div class="p-2 ml-5">
-                        <img src=# alt="131231" width=400>
+                        <img src="<%= dogData.animal.photos[0].full %>" alt="131231" width=400>
                     </div>
                     <div class="p-2 mr-5">
-                        <p>Name</p>
-                        <p>Age - Gender - Breed - Color</p>
-                        <p>Description: </p>
-                        <p>Contact Info: </p>
+                        <p><%= dogData.animal.name %></p>
+                        <p><%= dogData.animal.age %> - <%= dogData.animal.gender %> - <%= dogData.animal.breeds.primary %></p>
+                        <p>Description: <%= dogData.animal.description %></p>
+                        <p>Contact Info: <%= dogData.animal.contact.email %>, <%= dogData.animal.contact.phone %></p>
                     </div>
                   </div>
             </div>
