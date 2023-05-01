@@ -166,12 +166,12 @@ app.get('/favorite', async (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     if (!validator.isEmail(req.body.email)) {
-      throw new Error('Invalid Email');
+      return res.render('pages/register', { error: 'Invalid Email' });
     }
     if (40 > validator.isStrongPassword(req.body.password, {
       returnScore: true
     })) {
-      throw new Error('Weak Password');
+      return res.render('pages/register', { error: 'Weak Password' });
     }
     const hash = await bcrypt.hash(req.body.password, 10);
 
@@ -183,7 +183,6 @@ app.post('/register', async (req, res) => {
     return res.redirect('/login');
   } catch (err) {
     console.error(err);
-    return res.redirect('/register', { error: err.messsage});
   }
 });
 
