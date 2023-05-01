@@ -329,12 +329,13 @@ app.post('/profile/location', async (req, res) => {
   res.redirect('/profile');
 });
 
-app.delete('/favorite', async (req, res) => {
+app.post('/unfavorite', async (req, res) => {
   try {
-    const query = 'DELETE FROM favorites WHERE user_id = $1, animal_id = $2;';
-
+    const query = 'DELETE FROM favorites WHERE user_id = $1 AND animal_id = $2;';
+    console.log(req.session.user.user_id);
+    console.log(req.params.animal_id);
     await db.none(query, [req.session.user.user_id, req.body.animal_id]);
-    return res.redirect('/favorites');
+    return res.redirect('/favorite');
   } catch (err) {
     console.error(err);
     return res.sendStatus(500);
