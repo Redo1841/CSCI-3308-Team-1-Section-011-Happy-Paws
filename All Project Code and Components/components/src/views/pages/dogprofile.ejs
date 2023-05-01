@@ -1,17 +1,16 @@
 <%- include ('../partials/header') %> <%- include ('../partials/menu') %>
 
         <main>
-
-        <div class="mt-5">
+            <div class="mt-5">
             <div class="d-flex justify-content-center">
-                <div class="container shadow" style="border-color: rgb(0, 179, 255);">
+                <div class="d-flex flex-row align-items-center p-4 shadow">
                     <div class="p-2 ml-5">
                         <img src="<%= dogData.animal.photos[0].full %>" alt="131231" width=400>
                     </div>
                     <div class="p-2 mr-5">
                         <p><%= dogData.animal.name %></p>
                         <p><%= dogData.animal.age %> - <%= dogData.animal.gender %> - <%= dogData.animal.breeds.primary %></p>
-                        <p style=" word-wrap:break-word;">Description: <%= dogData.animal.description %></p>
+                        <p>Description: <%= dogData.animal.description %></p>
                         <p>Contact Info: <%= dogData.animal.contact.email %>, <%= dogData.animal.contact.phone %></p>
                     </div>
                   </div>
