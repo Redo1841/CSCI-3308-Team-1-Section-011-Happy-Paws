@@ -117,6 +117,10 @@ app.get('/login', (req, res) => {
   res.render('pages/login', {});
 });
 
+app.get('/dog', (req, res) => {
+  res.render('pages/dogprofile', {})
+});
+
 app.get('/favorite', async (req, res) => {
   try {
     const query = `SELECT animal_id FROM favorites where user_id = $1`;
