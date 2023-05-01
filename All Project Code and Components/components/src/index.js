@@ -104,7 +104,7 @@ app.get('/discover', async (req, res) => {
   const finderRes = await axios.get('/animals', axiosConfig);
 
   let petfinder = {};
-  petfinder.animals =  finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
+  petfinder.animals = finderRes.data.animals.filter((animal) => animal.photos.length > 0).slice(0, 20);
   return res.render('pages/discover', { petfinder });
 
 });
@@ -117,8 +117,17 @@ app.get('/login', (req, res) => {
   res.render('pages/login', {});
 });
 
-app.get('/dog', (req, res) => {
-  res.render('pages/dogprofile', {})
+app.get('/dog/:animalId', async (req, res) => {
+  const axiosConfig = {
+    baseURL: 'https://api.petfinder.com/v2/',
+    headers: {
+      Authorization: `Bearer ${process.env.PETFINDER_API_KEY}`
+    },
+  };
+
+  const finderRes = await axios.get(`/animals/${req.params.animalId}`, axiosConfig);
+  console.log(finderRes.data);
+  res.render('pages/dogprofile', { dogData: finderRes.data });
 });
 
 app.get('/favorite', async (req, res) => {
@@ -145,7 +154,7 @@ app.get('/favorite', async (req, res) => {
     }));
     petfinder.animals = petfinder.animals.filter((animal) => animal).slice(0, 20);
 
-    res.render('pages/favorite', { petfinder});
+    res.render('pages/favorite', { petfinder });
   } catch (err) {
     console.error(err);
     return res.redirect('/discover');
@@ -202,10 +211,10 @@ app.post('/favorite', async (req, res) => {
 // PROFILE PAGE API 
 
 app.get('/profile', async (req, res) => {
-  
+
   try {
     const query = `SELECT * FROM users where user_id = $1`;
-  
+
     const user = await db.one(query, [req.session.user.user_id]);
     res.render('pages/profile', { users: user });
   }
@@ -215,121 +224,106 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-app.post('/profile/email', async (req,res) => {
-  if(req.body.email)
-  {
-    try{
+app.post('/profile/email', async (req, res) => {
+  if (req.body.email) {
+    try {
       const query = `update users set email = $1 where user_id = ${req.session.user.user_id} returning *;`;
-      
+
       await db.one(query, [req.body.email]); //need await to update the query before trying to rerender the profile page
       return res.redirect('/profile');
-      
+
     }
-    catch(err)
-    {
+    catch (err) {
       console.error(err);
       return res.redirect('/discover');
     }
-    
+
   }
-  else
-  {
+  else {
     console.error("No Email provided")
   }
   res.redirect('/profile');
 });
 
-app.post('/profile/password', async(req,res) => {
-  if(req.body.password)
-  {
-    try{
+app.post('/profile/password', async (req, res) => {
+  if (req.body.password) {
+    try {
       const hash = await bcrypt.hash(req.body.password, 10);
       const query = `update users set password = $1 where user_id = ${req.session.user.user_id} returning *;`;
 
       await db.one(query, [hash]);
       return res.redirect('/profile');
-      
+
     }
-    catch(err)
-    {
+    catch (err) {
       console.error(err);
       return res.redirect('/discover');
     }
-    
+
   }
-  else
-  {
+  else {
     console.error("No password provided")
   }
   res.redirect('/profile');
 });
 
-app.post('/profile/first_name', async (req,res) => {
-  if(req.body.first_name)
-  {
-    try{
+app.post('/profile/first_name', async (req, res) => {
+  if (req.body.first_name) {
+    try {
       const query = `update users set first_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
-      
+
       await db.one(query, [req.body.first_name]); //need await to update the query before trying to rerender the profile page
       return res.redirect('/profile');
-      
+
     }
-    catch(err)
-    {
+    catch (err) {
       console.error(err);
       return res.redirect('/discover');
     }
-    
+
   }
-  else
-  {
+  else {
     console.error("No First Name provided")
   }
   res.redirect('/profile');
 });
-app.post('/profile/last_name', async (req,res) => {
-  if(req.body.last_name)
-  {
-    try{
+app.post('/profile/last_name', async (req, res) => {
+  if (req.body.last_name) {
+    try {
       const query = `update users set last_name = $1 where user_id = ${req.session.user.user_id} returning *;`;
-      
+
       await db.one(query, [req.body.last_name]); //need await to update the query before trying to rerender the profile page
       return res.redirect('/profile');
-      
+
     }
-    catch(err)
-    {
+    catch (err) {
       console.error(err);
       return res.redirect('/discover');
     }
-    
+
   }
-  else
-  {
+  else {
     console.error("No Last Name provided")
   }
   res.redirect('/profile');
 });
 
-app.post('/profile/location', async (req,res) => {
-  if(req.body.location)
-  {
-    try{
+app.post('/profile/location', async (req, res) => {
+  if (req.body.location) {
+    try {
       const query = `update users set location = $1 where user_id = ${req.session.user.user_id} returning *;`;
-      
+
       await db.one(query, [req.body.location]); //need await to update the query before trying to rerender the profile page
       return res.redirect('/profile');
-      
+
     }
-    catch(err)
-    {
+    catch (err) {
       console.error(err);
       return res.redirect('/discover');
     }
-    
+
   }
-  else
-  {
+  else {
     console.error("No Location provided")
   }
   res.redirect('/profile');
