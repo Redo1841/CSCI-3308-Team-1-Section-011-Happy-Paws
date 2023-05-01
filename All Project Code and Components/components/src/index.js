@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcrypt'); //  To hash passwords
 const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
+const validator = require('validator');
 require('dotenv').config(); //include .env
 
 // *****************************************************
@@ -164,6 +165,14 @@ app.get('/favorite', async (req, res) => {
 
 app.post('/register', async (req, res) => {
   try {
+    if (!validator.isEmail(req.body.email)) {
+      throw 'Invalid Email';
+    }
+    if (40 > validator.isStrongPassword(req.body.password, {
+      returnScore: true
+    })) {
+      throw 'Weak Password'
+    }
     const hash = await bcrypt.hash(req.body.password, 10);
 
     const query = `INSERT INTO users(email, password, first_name, last_name, location) VALUES ($1, $2, $3, $4, $5);`;
