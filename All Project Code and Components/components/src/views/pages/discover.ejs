@@ -6,74 +6,26 @@
 
   <script src="https://kit.fontawesome.com/f673493116.js" crossorigin="anonymous"></script>
   <style type="text/css">
+.button{
 
-.fa-heart{
-    color: rgb(0, 179, 255);;
-    font-size: 12vh;
-    
-    cursor: pointer;
-}
+border: none;
 
-.fa-solid.fa-heart{
-    animation: heartPulse;
-    animation-duration: 0.3s;
-    animation-iteration-count: 1;
-}
+padding: 15px;
 
-@keyframes heartPulse{
-    0%{
-        scale: 1;
-    }
-    50%{
-        scale: 1.1;
-        color: rgb(0, 179, 255);;
-    }
-    100%{
-        scale: 1;
-    }
+color: rgb(0, 0, 0);
+
+background-color: rgb(0, 162, 255);
+
+border-radius: 15px;
+
 }
 
   </style>
   <script type="text/javascript">
- let favorite = 0;
 
-function favoriteFunction1(){
-    if (favorite == 0) {
-    document.getElementById("favoriteHeart1").className = "fa-solid fa-heart";
-    favorite = 1;
-    } else {
-    document.getElementById("favoriteHeart1").className = "fa-regular fa-heart";
-    favorite = 0;
-    }
-};
-function favoriteFunction2(){
-    if (favorite == 0) {
-    document.getElementById("favoriteHeart2").className = "fa-solid fa-heart";
-    favorite = 1;
-    } else {
-    document.getElementById("favoriteHeart2").className = "fa-regular fa-heart";
-    favorite = 0;
-    }
-};
-function favoriteFunction3(){
-    if (favorite == 0) {
-    document.getElementById("favoriteHeart3").className = "fa-solid fa-heart";
-    favorite = 1;
-    } else {
-    document.getElementById("favoriteHeart3").className = "fa-regular fa-heart";
-    favorite = 0;
-    }
-};
-function favoriteFunction4(){
-    if (favorite == 0) {
-    document.getElementById("favoriteHeart4").className = "fa-solid fa-heart";
-    favorite = 1;
-    } else {
-    document.getElementById("favoriteHeart4").className = "fa-regular fa-heart";
-    favorite = 0;
-    }
-};
-
+function changeColor() {
+  document.getElementById("button").style.backgroundColor = "#911";
+}
   </script>
 </head>
 <body>
@@ -95,7 +47,7 @@ function favoriteFunction4(){
               <form action = "/favorite" method = "post">
                 <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[i].id%>">
                 <!-- <button onclick="favoriteFunction1()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
-                <button id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button>
+                <button id= "button" type="submit" class="button" onclick="changeColor()">Favorite</button>
               </form>
           </div>
           </p>
