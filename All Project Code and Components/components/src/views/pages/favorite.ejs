@@ -44,13 +44,15 @@ function changeColor() {
                 <h5 class="card-title"><%= petfinder.animals[i].name %></h5>
                 <p class="card-text"><%= petfinder.animals[i].breeds.primary%> - <%= petfinder.animals[i].gender%> </p>
                 <div id="favoriteDiv">
-                  <form action="/unfavorite" method="post">
-                    <!-- <input type="hidden" name="_method" value="DELETE"> -->
-                    <input type="hidden" name="animal_id" value="<%= petfinder.animals[i].id %>">
-                    <button id="button" type="submit" class="button" onclick="changeColor()">Unfavorite</button>
-                  </form>
+                  <div id="favoriteDiv">
+                    <form action = "/unfavorite" method = "post">
+                      <input type="hidden" name = "animal_id" value = "<%= petfinder.animals[i].id%>">
+                      <!-- <button onclick="favoriteFunction1()" id= "favoriteHeart1" type="submit"><i class="fa-regular fa-heart"></i></button> -->
+                      <button id= "button" type="submit" class="button" style="color: white" >Unfavorite</button>
+                    </form>
                 </div>
-                
+                </p>
+      
                 <form action="/dog/<%= petfinder.animals[i].id %>" method="GET">
                   <input type="submit" value="View Animal" class="px-3">
                 </form>
@@ -74,5 +76,6 @@ function changeColor() {
         </div>
       <% } %>
     </div>
+</div>
 </div>
 <%- include ('../partials/footer') %>
