@@ -1,0 +1,7 @@
+<% if (locals.error) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %> d-flex justify-content-center"
+      role="alert">
+      <%= error %>
+    </div>
+    <% } %>
