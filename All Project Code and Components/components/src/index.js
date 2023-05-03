@@ -259,6 +259,15 @@ app.post('/profile/email', async (req, res) => {
 app.post('/profile/password', async (req, res) => {
   if (req.body.password) {
     try {
+      if (25 > validator.isStrongPassword(req.body.password, {
+        returnScore: true
+      })) {
+        const query = `SELECT * FROM users where user_id = $1`;
+
+        const user = await db.one(query, [req.session.user.user_id]);
+        return res.render('pages/profile', { users: user, error: 'Weak Password'});
+        //return res.redirect('/profile', { error: 'Weak Password' });
+      }
       const hash = await bcrypt.hash(req.body.password, 10);
       const query = `update users set password = $1 where user_id = ${req.session.user.user_id} returning *;`;
 
