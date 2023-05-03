@@ -168,7 +168,7 @@ app.post('/register', async (req, res) => {
     if (!validator.isEmail(req.body.email)) {
       return res.render('pages/register', { error: 'Invalid Email' });
     }
-    if (40 > validator.isStrongPassword(req.body.password, {
+    if (25 > validator.isStrongPassword(req.body.password, {
       returnScore: true
     })) {
       return res.render('pages/register', { error: 'Weak Password' });
@@ -183,6 +183,7 @@ app.post('/register', async (req, res) => {
     return res.redirect('/login');
   } catch (err) {
     console.error(err);
+    res.render('pages/register', { error: err.message })
   }
 });
 
@@ -196,10 +197,12 @@ app.post('/login', async (req, res) => {
       req.session.save();
       return res.redirect('/discover');
     }
-    return res.redirect('/login');
+    else {
+      return res.render('pages/login', { error: 'Invalid Login' });
+    }
   } catch (err) {
     console.error(err);
-    return res.redirect('/login');
+    return res.render('pages/login', { error: err.message });
   }
 });
 
