@@ -202,7 +202,7 @@ app.post('/login', async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    return res.render('pages/login', { error: err.message });
+    return res.render('pages/login', { error: 'Invalid Login' });
   }
 });
 
