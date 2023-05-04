@@ -238,6 +238,12 @@ app.get('/profile', async (req, res) => {
 app.post('/profile/email', async (req, res) => {
   if (req.body.email) {
     try {
+      if (!validator.isEmail(req.body.email)) {
+        const query = `SELECT * FROM users where user_id = $1`;
+
+        const user = await db.one(query, [req.session.user.user_id]);
+        return res.render('pages/profile', { users: user, error: 'Invalid Email' });
+      }
       const query = `update users set email = $1 where user_id = ${req.session.user.user_id} returning *;`;
 
       await db.one(query, [req.body.email]); //need await to update the query before trying to rerender the profile page
